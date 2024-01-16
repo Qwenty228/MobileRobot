@@ -1,5 +1,6 @@
 import pygame as pg
 
+print("f")
 pg.init()
 
 SIZE = (640, 640)
