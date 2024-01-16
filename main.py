@@ -2,13 +2,22 @@ import pygame as pg
 
 pg.init()
 
-SIZE = (640, 640)
-
+SIZE = WIDTH, HEIGHT = (640, 640)
 window = pg.display.set_mode(SIZE)
 
 run = True
 
-rect = [100, 100, 100, 100]
+ 
+
+
+
+
+# rect1 = MyRect([100, 100, 100, 100], 'darkgreen')
+
+my_button_rect = pg.Rect([100,100,100,100])
+my_button_rect.center = WIDTH/2, HEIGHT/2
+
+
 
 while run:
     for event in pg.event.get():
@@ -16,13 +25,11 @@ while run:
             run = False
 
 
-    window.fill('orange')
-    
-    pg.draw.rect(window, 'red', (100, 100, 100, 100))
-
-    
-
-    
+    window.fill('grey20')
+    pg.draw.rect(window, 'darkgreen', my_button_rect)
+    if my_button_rect.collidepoint(pg.mouse.get_pos()):
+        pg.draw.rect(window, 'darkred', my_button_rect)
+  
     pg.display.update()
 
 
