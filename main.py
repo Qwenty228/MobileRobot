@@ -3,24 +3,37 @@ import pygame as pg
 print("f")
 pg.init()
 
-SIZE = (640, 640)
-
+SIZE = WIDTH, HEIGHT = (640, 640)
 window = pg.display.set_mode(SIZE)
 
 rect = [320, 320, 100, 100]
 
 run = True
 
+ 
+
+
+
+
+# rect1 = MyRect([100, 100, 100, 100], 'darkgreen')
+
+my_button_rect = pg.Rect([100,100,100,100])
+my_button_rect.center = WIDTH/2, HEIGHT/2
+
+
+
 while run:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
-    window.fill('orange')
-    pg.draw.rect(window, 'blue', rect, border_top_left_radius=20, border_bottom_right_radius=20, width=2)
-    if (rect[0] <= pg.mouse.get_pos()[0] <= rect[0] + rect[2]) and (rect[1] <= pg.mouse.get_pos()[1] <= rect[1] + rect[3]):
-        print("Collide")
-    # print(pg.mouse.get_pos())
+
+    window.fill('grey20')
+    pg.draw.rect(window, 'darkgreen', my_button_rect)
+    if my_button_rect.collidepoint(pg.mouse.get_pos()):
+        pg.draw.rect(window, 'darkred', my_button_rect)
+  
     pg.display.update()
+
 
 print("End of program")
 pg.quit()
