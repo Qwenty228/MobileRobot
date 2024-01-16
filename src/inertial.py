@@ -10,10 +10,10 @@ class Control:
         
         self.font = Font('consolas', 40)
         
-        self.font.render_to(self.surface, (10, 60), 'd: toggle debug', 'darkgreen')
-        self.font.render_to(self.surface, (10, 100), 'up, down: forward, backward', 'darkgreen')
-        self.font.render_to(self.surface, (10, 140), 'left, right: left, right', 'darkgreen')
-        self.font.render_to(self.surface, (10, 180), 'q, e: rotate', 'darkgreen')
+        self.font.render_to(self.surface, (10, 10), 'd: toggle debug', 'darkgreen')
+        self.font.render_to(self.surface, (10, 50), 'up, down: forward, backward', 'red')
+        self.font.render_to(self.surface, (10, 90), 'left, right: left, right', 'green')
+        self.font.render_to(self.surface, (10, 130), 'q, e: rotate', 'black')
 
     def draw(self):
         self.window.blit(self.surface, self.rect)

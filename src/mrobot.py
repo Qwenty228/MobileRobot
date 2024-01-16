@@ -18,8 +18,12 @@ class Robot:
         car_front.fill('black')
         self.image.blit(car_front, (self.w*0.8, 0))
         
+        arrow = pg.image.load('assets/arrow.png').convert_alpha()
+        self.arrow = self.basearrow = pg.transform.scale_by(arrow, 0.5)
 
-        self.debug = False
+        self.debug = True
+
+        self.fl = [1, 1]
 
   
     @property
@@ -38,14 +42,31 @@ class Robot:
         self.pos += dx, dy
         self.angle += dpsi
 
+        if forward < 0:
+            self.fl[0] = -1
+        elif forward > 0:
+            self.fl[0] = 1
+        if lateral < 0:
+            self.fl[1] = -1
+        elif lateral > 0:
+            self.fl[1] = 1
+        if rotation < 0:
+            self.arrow = pg.transform.flip(self.basearrow, True, False)
+        elif rotation > 0:
+            self.arrow = self.basearrow
+
 
     def draw(self, window):
+        if self.debug:
+            image = pg.transform.rotate(self.arrow, -self.angle)
+            window.blit(image, image.get_rect(center=self.pos))
+
         image = pg.transform.rotate(self.image, -self.angle)
         self.rect = image.get_rect(center=self.pos)
         window.blit(image, self.rect)
         if self.debug:
-            self.draw_direction(window, 'red', 50, 'forward')
-            self.draw_direction(window, 'green', -50, 'lateral')
+            self.draw_direction(window, 'red', 50*self.fl[0], 'forward')
+            self.draw_direction(window, 'green', -50*self.fl[1], 'lateral')
 
     def draw_direction(self, window, color, length=50, direc: Literal['forward', 'lateral']='forward'):
         angle = self.angle
