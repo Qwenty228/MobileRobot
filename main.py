@@ -19,20 +19,35 @@ class Player:
         self.center = pos
         self.radius = radius
         self.color = color
+        self.bullets = []
     
     def draw(self, surface):
         pg.draw.circle(surface, self.color, self.center, self.radius)
 
-    def update(self):
+    def update(self,surface):
         keys = pg.key.get_pressed()
         if keys[pg.K_LEFT]:
-            self.center[0] -= 10
+            self.center[0] -= 5
         if keys[pg.K_RIGHT]:
-            self.center[0] += 10
+            self.center[0] += 5
         if keys[pg.K_UP]:
-            self.center[1] -= 10
+            self.center[1] -= 5
         if keys[pg.K_DOWN]:
-            self.center[1] += 10
+            self.center[1] += 5
+        if keys[pg.K_SPACE]:
+            self.bullets.append(Bullet([self.center[0], self.center[1]]))
+        for bullet in self.bullets:
+            bullet.update(surface)
+
+class Bullet:
+    def __init__(self, pos):
+        self.center = pos
+        self.color = "white"
+        self.radius = 4
+
+    def update(self, surface):
+        self.center[1] -= 2
+        pg.draw.circle(surface, self.color, (self.center[0], self.center[1]), self.radius)
 
 clock = pg.time.Clock()
 
@@ -43,6 +58,9 @@ while run:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_SPACE:
+                pass
         # if event.type == pg.MOUSEBUTTONDOWN:
         #     if event.button == 1:
         #         my_button.click_event(pg.mouse.get_pos(), True)
@@ -52,7 +70,7 @@ while run:
     window.fill('black')
 
     my_player.draw(window)
-    my_player.update()
+    my_player.update(window)
 
     # my_button.draw(window)
     # button.draw(window)
