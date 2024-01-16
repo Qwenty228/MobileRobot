@@ -1,9 +1,12 @@
 import pygame as pg
 
+print("f")
 pg.init()
 
 SIZE = WIDTH, HEIGHT = (640, 640)
 window = pg.display.set_mode(SIZE)
+
+rect = [320, 320, 100, 100]
 
 run = True
 
@@ -23,7 +26,6 @@ while run:
     for event in pg.event.get():
         if event.type == pg.QUIT:
             run = False
-
 
     window.fill('grey20')
     pg.draw.rect(window, 'darkgreen', my_button_rect)
