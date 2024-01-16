@@ -3,13 +3,8 @@ from src.inertial import Inertial_frame
 from src.mrobot import Robot
 import numpy as np
 
-<<<<<<< HEAD
 FPS = 60
 
-# init 
-=======
-print("f")
->>>>>>> 1c5f5f457b08c2a3416ad6b8ca42566e952b4648
 pg.init()
 window = pg.display.set_mode((800, 800), pg.SCALED | pg.RESIZABLE)
 pg.display.set_caption("Kinematics")
@@ -19,18 +14,8 @@ iframe = Inertial_frame(window)
 robot = Robot((400, 400))
 vel = 100 # px/s
 
-<<<<<<< HEAD
 movements = np.array([0, 0, 0], dtype=float)
-=======
-SIZE = WIDTH, HEIGHT = (640, 640)
-window = pg.display.set_mode(SIZE)
 
-rect = [320, 320, 100, 100]
-
-run = True
-
- 
->>>>>>> 1c5f5f457b08c2a3416ad6b8ca42566e952b4648
 
 
 # main loop
@@ -73,7 +58,6 @@ while running:
             if event.key == pg.K_e:
                 movements[2] = 0
 
-<<<<<<< HEAD
 
     # draw
     window.fill('gray50')
@@ -82,12 +66,6 @@ while running:
     robot.draw(window)
 
     
-=======
-    window.fill('grey20')
-    pg.draw.rect(window, 'darkgreen', my_button_rect)
-    if my_button_rect.collidepoint(pg.mouse.get_pos()):
-        pg.draw.rect(window, 'darkred', my_button_rect)
-  
->>>>>>> 1c5f5f457b08c2a3416ad6b8ca42566e952b4648
+
     pg.display.update()
     
