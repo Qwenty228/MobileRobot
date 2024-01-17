@@ -34,10 +34,13 @@ class Player:
             self.center[1] -= 5
         if keys[pg.K_DOWN]:
             self.center[1] += 5
-        if keys[pg.K_SPACE]:
-            self.bullets.append(Bullet([self.center[0], self.center[1]]))
+        # if keys[pg.K_SPACE]:
+        #     self.bullets.append(Bullet([self.center[0], self.center[1]]))
         for bullet in self.bullets:
             bullet.update(surface)
+    
+    def fire(self):
+        self.bullets.append(Bullet([self.center[0], self.center[1]]))
 
 class Bullet:
     def __init__(self, pos):
@@ -60,7 +63,7 @@ while run:
             run = False
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_SPACE:
-                pass
+                my_player.fire()
         # if event.type == pg.MOUSEBUTTONDOWN:
         #     if event.button == 1:
         #         my_button.click_event(pg.mouse.get_pos(), True)
