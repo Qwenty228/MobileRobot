@@ -6,6 +6,7 @@ pg.init()
 SIZE = WIDTH, HEIGHT = (640, 640)
 
 window = pg.display.set_mode(SIZE)
+pg.display.set_caption("Space Invaders")
 
 my_rect = pg.Rect([100, 100, 100, 100])
 my_rect.center = WIDTH/2, HEIGHT/2
@@ -30,10 +31,10 @@ class Player:
             self.center[0] -= 5
         if keys[pg.K_RIGHT]:
             self.center[0] += 5
-        if keys[pg.K_UP]:
-            self.center[1] -= 5
-        if keys[pg.K_DOWN]:
-            self.center[1] += 5
+        # if keys[pg.K_UP]:
+        #     self.center[1] -= 5
+        # if keys[pg.K_DOWN]:
+        #     self.center[1] += 5
         # if keys[pg.K_SPACE]:
         #     self.bullets.append(Bullet([self.center[0], self.center[1]]))
         for bullet in self.bullets:
@@ -55,7 +56,7 @@ class Bullet:
 clock = pg.time.Clock()
 
 
-my_player = Player('red', 10, [100, 100])
+my_player = Player('red', 10, [100, 600])
 
 while run:
     for event in pg.event.get():
@@ -71,6 +72,7 @@ while run:
 
 
     window.fill('black')
+
 
     my_player.draw(window)
     my_player.update(window)
