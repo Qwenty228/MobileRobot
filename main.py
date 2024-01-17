@@ -1,4 +1,5 @@
 import pygame as pg
+import random
 
 print("f")
 pg.init()
@@ -16,11 +17,14 @@ run = True
 font = pg.font.SysFont('Arial', 38)
 
 class Player:
-    def __init__(self, color, radius, pos):
+    def __init__(self, color, radius, pos, level):
         self.center = pos
         self.radius = radius
         self.color = color
         self.bullets = []
+        self.enemies = []
+        for i in range(level):
+            self.enemies.append(Enemy())
     
     def draw(self, surface):
         pg.draw.circle(surface, self.color, self.center, self.radius)
@@ -31,16 +35,16 @@ class Player:
             self.center[0] -= 5
         if keys[pg.K_RIGHT]:
             self.center[0] += 5
-        # if keys[pg.K_UP]:
-        #     self.center[1] -= 5
-        # if keys[pg.K_DOWN]:
-        #     self.center[1] += 5
-        # if keys[pg.K_SPACE]:
-        #     self.bullets.append(Bullet([self.center[0], self.center[1]]))
-        for bullet in self.bullets:
-            bullet.update(surface)
-            if not(bullet.isalive):
-                self.bullets.remove(bullet)
+        for enemy in self.enemies:
+            enemy.update(surface)
+            for bullet in self.bullets:
+                bullet.update(surface, enemy)
+                if not(bullet.isalive):
+                    self.bullets.remove(bullet) 
+            if enemy.health == 0: 
+                self.enemies.remove(enemy)
+                
+                
     
     def fire(self):
         self.bullets.append(Bullet([self.center[0], self.center[1]]))
@@ -52,16 +56,37 @@ class Bullet:
         self.radius = 4
         self.isalive = True
 
-    def update(self, surface):
+    def update(self, surface, enemy):
         self.center[1] -= 2
         pg.draw.circle(surface, self.color, (self.center[0], self.center[1]), self.radius)
         if not((0 <= self.center[0] <= WIDTH) and (0 <= self.center[1] <= HEIGHT)):
             self.isalive = False
+        if enemy.rect.collidepoint(self.center):
+            enemy.health -= 1
+            self.isalive = False
+
+class Enemy:
+    def __init__(self):
+        self.color = "grey"
+        self.surface = pg.Surface((30, 30))
+        self.rect = self.surface.get_rect()
+        self.rect.center = (random.randint(50, WIDTH - 50), random.randint(50, 200))
+        self.health = 3
+
+    
+    def update(self, surface):
+        if self.health == 2:
+            self.color = "orange"
+        elif self.health == 1:
+            self.color = "red"
+        surface.blit(self.surface, self.rect)
+        self.surface.fill(self.color)
+        
 
 clock = pg.time.Clock()
 
 
-my_player = Player('red', 10, [100, 600])
+my_player = Player('red', 10, [100, 600],2)
 
 while run:
     for event in pg.event.get():
@@ -70,10 +95,6 @@ while run:
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_SPACE:
                 my_player.fire()
-        # if event.type == pg.MOUSEBUTTONDOWN:
-        #     if event.button == 1:
-        #         my_button.click_event(pg.mouse.get_pos(), True)
-        #         button.click_event(pg.mouse.get_pos(), True)
 
 
     window.fill('black')
@@ -81,22 +102,6 @@ while run:
 
     my_player.draw(window)
     my_player.update(window)
-
-    # my_button.draw(window)
-    # button.draw(window)
-    # if my_rect.collidepoint(pg.mouse.get_pos()):
-    #     surface.fill("red")
-    # else:
-
-
-    # window.blit(surface, my_rect)
-    # pg.draw.rect(window, 'blue', my_rect)
-    # if my_rect.collidepoint(pg.mouse.get_pos()):
-    #     pg.draw.rect(window, 'red', my_rect)
-
-    # if (rect[0] <= pg.mouse.get_pos()[0] <= rect[0] + rect[2]) and (rect[1] <= pg.mouse.get_pos()[1] <= rect[1] + rect[3]):
-    #     print("Collide")
-    # print(pg.mouse.get_pos())
     pg.display.update()
     clock.tick(60)
 
