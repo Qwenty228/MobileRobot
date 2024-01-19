@@ -8,14 +8,6 @@ from .settings import *
 
 
 
-TILESIZE = 32
-
-TILES_W = WIDTH // TILESIZE
-TILES_H = HEIGHT // TILESIZE
-
-
-
-
 class Tilemap:
     def __init__(self, path: str) -> None:
         try: 
