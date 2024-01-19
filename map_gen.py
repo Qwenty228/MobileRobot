@@ -1,19 +1,19 @@
 
 
 # map structure:
-# { data: {"x;y":[name, orientation, layer]}}
+# { tiles: {"x;y":[name, orientation, layer]}, decorations: {"x;y":[name, orientation, layer]}}
 
 
 import random
 import json
 
-data = {"data": {}}
+data = {"tiles": {}, "decorations": {}}
 
 tiles = ["grass", 'stone', 'sand']
 
 for x in range(-10, 10):
     for y in range(-10, 10):
-        data["data"][str(x) + ";" + str(y)] = [random.choice(tiles), 0, 0]
+        data["tiles"][str(x) + ";" + str(y)] = [random.choice(tiles), 0, 0]
 
 
 with open("data/map.json", "w") as f:

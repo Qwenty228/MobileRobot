@@ -1,1 +1,2 @@
 SIZE = WIDTH, HEIGHT = (800, 600)
+aspect_ratio = WIDTH / HEIGHT
