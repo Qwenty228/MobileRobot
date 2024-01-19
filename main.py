@@ -7,6 +7,10 @@ from src.player import Player
 from shader.core import Shader
 import numpy as np
 
+# py -3.11 -m pipreqs.pipreqs --force
+# pip install -r requirements.txt
+
+
 window = pg.display.set_mode(SIZE, pg.OPENGL|pg.DOUBLEBUF|pg.RESIZABLE)
 display = pg.Surface(SIZE)
 
@@ -81,3 +85,5 @@ while run:
     shader.render(display)
     pg.display.flip()
     
+
+
