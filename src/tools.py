@@ -1,6 +1,7 @@
 import numpy as np
 import pygame as pg
 
+from .settings import *
 
 class Camera:
     def __init__(self) -> None:
@@ -17,4 +18,11 @@ class Camera:
 
 
 
-
+class Mouse:
+    offset = (0, 0)
+    pos = (0, 0)
+    ratio = 1
+    @classmethod
+    def update(cls):
+        x, y = pg.mouse.get_pos()
+        cls.pos = (x - cls.offset[0]) /cls.ratio , (y - cls.offset[1] )/ cls.ratio

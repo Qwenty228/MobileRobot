@@ -44,7 +44,6 @@ class Shader:
     def __init__(self):
         self.ctx = moderngl.create_context()
         self.screen_size = SIZE
-        self.min_ratio = 1
         quad_buffer = self.ctx.buffer(data=array('f', [
             -1.0,  1.0, 0.0, 0.0,   # top left
             1.0, 1.0, 1.0, 0.0,     # top right

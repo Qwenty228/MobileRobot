@@ -5,6 +5,7 @@ from pygame import Vector2
 
 from .entities import Entity
 from .settings import TILESIZE
+from .tools import Mouse
 
 
 class Timer:
@@ -72,10 +73,10 @@ class Sword:
         surf.blit(self.image, (self.rect.x - offset[0], self.rect.y - offset[1]))
 
 class Player(Entity):
-    def __init__(self, rect, image, group: Group = None) -> None:
+    def __init__(self, rect, image, group: Group = None, zombies=[]) -> None:
         super().__init__(rect, image, group)
         self.speed = 160
-
+        self.zombies = zombies
         self.sword = Sword(self.rect.center)
        
 
@@ -84,6 +85,11 @@ class Player(Entity):
         self.sword.update(self.rect.center)
         if pg.mouse.get_pressed()[0] and not self.sword.timers["swing"].activated:
             self.sword.timers["swing"].activate()
+            for zombie in self.zombies:
+                if self.sword.rect.colliderect(zombie.rect):
+                    zombie.hp -= 10
+                    if zombie.hp <= 0:
+                        self.zombies.remove(zombie)
         
         self.sword.timers["swing"].update(dt)
    
@@ -93,7 +99,7 @@ class Player(Entity):
     def draw(self, surf, offset=(0, 0)):
         super().draw(surf, offset)
         pivot = Vector2(self.rect.center) - Vector2(offset)
-        line = pivot - Vector2(pg.mouse.get_pos())
+        line = pivot - Vector2(Mouse.pos)
         if not self.sword.timers["swing"].activated:
             self.sword.angle = 180-line.angle_to(Vector2(1, 0))
         self.sword.rotate()
