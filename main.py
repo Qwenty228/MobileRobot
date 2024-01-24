@@ -12,7 +12,6 @@ pg.display.set_icon(pg.image.load("assets/icon.png"))
 clock = pg.time.Clock()
 iframe = Inertial_frame(window)
 robot = Robot((400, 400))
-vel = 100 # px/s
 
 movements = np.array([0, 0, 0], dtype=float)
 
@@ -62,7 +61,7 @@ while running:
     # draw
     window.fill('gray50')
     iframe.draw()
-    robot.update(*vel*movements, dt)
+    robot.update(*movements, dt)
     robot.draw(window)
 
     
