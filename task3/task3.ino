@@ -57,16 +57,17 @@ void setup() {
 
 void loop() {
 
-  // delay(10000);
 
-  inverse_forward_kine(0.30);
-  straight(0.3, 0.10);    // 0.1 meter per sec
-  rotate(180, 3, 0);  // rotate 180 degree clockwise, 60 degree per sec, radius of 0.3
-  straight(0.3, 0.10);    // 0.1 meter per sec
-  rotate(90, 30, 0.0);    // rotate 90 degree counter clock wise, 30 degree per sec
-  straight(30, 0.15);     // 0.15 meter per sec
-  rotate(90, 30, 0.0);
-  straight(0.3, 0.15);
+  // inverse_forward_kine(0.30);
+  straight(0.3, 0.10);           // 0.1 meter per sec
+  rotate(180, 0.05, -3.06 / 2);  // rotate 180 degree clockwise, radius 30
+  straight(0.3, 0.10);           // 0.1 meter per sec
+  rotate(90, 0.0, 3.14);         // rotate 90 degree counter clock wise
+  straight(0.3, 0.10);           // 0.1 meter per sec
+  rotate(90, 0.0, 3.14);
+  straight(0.6, 0.1);
+  // inverse_kine(0.1*3.14/2, 3.14/2);
+  // delay(5000);
 
   dxl.setGoalVelocity(RIGHT, 0, UNIT_RPM);
   dxl.setGoalVelocity(LEFT, 0, UNIT_RPM);
