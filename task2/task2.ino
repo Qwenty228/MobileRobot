@@ -44,12 +44,6 @@ void setup() {
 }
 
 
-// void get_pos(int dt) {
-//   x += wheel_radius * (right_vel + left_vel) * cos(angle) / 2 * dt;
-//   y += wheel_radius * (right_vel + left_vel) * sin(angle) / 2 * dt;
-//   angle += wheel_radius * (right_vel - left_vel) / (2 * width_from_c) * dt;
-// }
-
 void once() {
   float width_from_c = 0.287 / 2.0;
   float wheel_radius = 0.066 / 2.0;
@@ -59,8 +53,6 @@ void once() {
 
   float x = 0, y = 0, angle = 0;
   float left_vel, right_vel;
-
-  // inverse kinematic
   int w1 = (forward_vel - turning_vel * width_from_c) / wheel_radius;
   int w2 = (forward_vel + turning_vel * width_from_c) / wheel_radius;
 

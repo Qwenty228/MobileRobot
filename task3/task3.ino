@@ -1,4 +1,6 @@
 #include <Dynamixel2Arduino.h>
+#include <math.h>
+#include "MyState.h"
 
 #define DXL_SERIAL Serial3
 #define DEBUG_SERIAL Serial
@@ -14,6 +16,12 @@ Dynamixel2Arduino dxl(DXL_SERIAL, DXL_DIR_PIN);
 
 //This namespace is required to use Control table item names
 using namespace ControlTableItem;
+
+
+// wheel state
+float last_left_wheel_degree = 0.0;
+float last_right_wheel_degree = 0.0;
+
 
 void setup() {
   // put your setup code here, to run once:
@@ -40,43 +48,27 @@ void setup() {
   dxl.setOperatingMode(RIGHT, OP_VELOCITY);
   dxl.torqueOn(RIGHT);
 
-  once();
+  last_left_wheel_degree = dxl.getPresentPosition(LEFT, UNIT_DEGREE);
+  last_right_wheel_degree = dxl.getPresentPosition(RIGHT, UNIT_DEGREE);
 }
 
 
-// void get_pos(int dt) {
-//   x += wheel_radius * (right_vel + left_vel) * cos(angle) / 2 * dt;
-//   y += wheel_radius * (right_vel + left_vel) * sin(angle) / 2 * dt;
-//   angle += wheel_radius * (right_vel - left_vel) / (2 * width_from_c) * dt;
-// }
-
-void once() {
-  float width_from_c = 0.287 / 2.0;
-  float wheel_radius = 0.066 / 2.0;
-
-  float forward_vel = 1.2/6.28;  // 1 meter / 2pi meter per revolution = 1 rad/ sec * 1.2 error
-  float turning_vel = 0.0;
-
-  float x = 0, y = 0, angle = 0;
-  float left_vel, right_vel;
-
-  // inverse kinematic
-  int w1 = (forward_vel - turning_vel * width_from_c) / wheel_radius;
-  int w2 = (forward_vel + turning_vel * width_from_c) / wheel_radius;
 
 
-  dxl.setGoalVelocity(RIGHT, w1, UNIT_RPM);
-  dxl.setGoalVelocity(LEFT, w2, UNIT_RPM);
-  delay(60000);
-  // DEBUG_SERIAL.println(get_pos(1));
+void loop() {
 
+  // delay(10000);
 
+  inverse_forward_kine(0.30);
+  straight(0.3, 0.10);    // 0.1 meter per sec
+  rotate(180, 3, 0);  // rotate 180 degree clockwise, 60 degree per sec, radius of 0.3
+  straight(0.3, 0.10);    // 0.1 meter per sec
+  rotate(90, 30, 0.0);    // rotate 90 degree counter clock wise, 30 degree per sec
+  straight(30, 0.15);     // 0.15 meter per sec
+  rotate(90, 30, 0.0);
+  straight(0.3, 0.15);
 
   dxl.setGoalVelocity(RIGHT, 0, UNIT_RPM);
   dxl.setGoalVelocity(LEFT, 0, UNIT_RPM);
-}
-
-
-void loop(){
-
+  delay(100000);
 }
